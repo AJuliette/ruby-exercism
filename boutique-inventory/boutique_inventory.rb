@@ -12,20 +12,15 @@ class BoutiqueInventory
   end
 
   def out_of_stock
-    @items.select { |item| item[:quantity_by_size] == {} }
+    @items.select { |item| item[:quantity_by_size].empty? }
   end
 
   def stock_for_item(name)
-    @items.select { |item| item[:name] == name }.pop[:quantity_by_size]
+    @items.find { |item| item[:name] == name }[:quantity_by_size]
   end
 
   def total_stock
-    items_with_stock = @items.select{ |item| item[:quantity_by_size] if !item[:quantity_by_size].empty? }
-    if !items_with_stock.empty?
-      value = items_with_stock.map{ |item| item[:quantity_by_size].map { |_, quantity| quantity } }.flatten.sum
-    else
-      0
-    end
+    @items.sum { |item| item[:quantity_by_size].values.sum }
   end
 
   private
