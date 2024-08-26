@@ -1,0 +1,5 @@
+class Reverser
+	def self.reverse(string)
+		string.chars.reverse.join
+	end
+end
