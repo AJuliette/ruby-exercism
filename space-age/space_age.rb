@@ -1,0 +1,46 @@
+class SpaceAge
+  EARTH_YEAR_IN_SECONDS = 31_557_600.to_f
+  MERCURY_ORBITAL_PERIOD_IN_EARTH_YEARS = 0.2408467
+  VENUS_ORBITAL_PERIOD_IN_EARTH_YEARS = 0.61519726
+  MARS_ORBITAL_PERIOD_IN_EARTH_YEARS = 1.8808158
+  JUPITER_ORBITAL_PERIOD_IN_EARTH_YEARS = 11.862615
+  SATURN_ORBITAL_PERIOD_IN_EARTH_YEARS = 29.447498
+  URANUS_ORBITAL_PERIOD_IN_EARTH_YEARS = 84.016846
+  NEPTUNE_ORBITAL_PERIOD_IN_EARTH_YEARS = 164.79132
+
+  def initialize(seconds)
+    @seconds = seconds.to_f
+  end
+
+  def on_earth
+    (@seconds / EARTH_YEAR_IN_SECONDS).round(2)
+  end
+
+  def on_mercury
+    on_earth / MERCURY_ORBITAL_PERIOD_IN_EARTH_YEARS
+  end
+
+  def on_venus
+    on_earth / VENUS_ORBITAL_PERIOD_IN_EARTH_YEARS
+  end
+
+  def on_mars
+    on_earth / MARS_ORBITAL_PERIOD_IN_EARTH_YEARS
+  end
+
+  def on_jupiter
+    on_earth / JUPITER_ORBITAL_PERIOD_IN_EARTH_YEARS
+  end
+
+  def on_saturn
+    on_earth / SATURN_ORBITAL_PERIOD_IN_EARTH_YEARS
+  end
+
+  def on_uranus
+    on_earth / URANUS_ORBITAL_PERIOD_IN_EARTH_YEARS
+  end
+
+  def on_neptune
+    on_earth / NEPTUNE_ORBITAL_PERIOD_IN_EARTH_YEARS
+  end
+end
