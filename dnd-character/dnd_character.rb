@@ -1,3 +1,5 @@
+require 'pry'
+
 class DndCharacter
   attr_reader :strength, :dexterity, :constitution, :intelligence, :wisdom, :charisma
 
@@ -22,3 +24,5 @@ class DndCharacter
     4.times.map { (1..6).to_a.sample }.max(3).sum
   end
 end
+
+binding.pry
