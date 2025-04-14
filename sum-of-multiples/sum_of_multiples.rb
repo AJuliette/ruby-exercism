@@ -1,3 +1,5 @@
+require 'pry'
+
 class SumOfMultiples
   def initialize(*base_value_of_magical_items)
     @base_value_of_magical_items = base_value_of_magical_items
