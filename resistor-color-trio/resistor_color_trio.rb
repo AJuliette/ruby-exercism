@@ -21,10 +21,12 @@ class ResistorColorTrio
     main_value = first_two_colors.map { |color| COLOR_BANDS_ENCODING[color.to_sym] }.join.to_i
     resistor_value = main_value * 10**COLOR_BANDS_ENCODING[zero_count.to_sym]
     if (resistor_value % 10**3).zero?
-      resistor_value = "#{ (resistor_value / 10**3) } kiloohms"
+      resistor_value = "#{ (resistor_value / 10**3) }"
+      mesure = 'kiloohms'
     else
-      resistor_value = "#{ resistor_value } ohms"
+      resistor_value = "#{ resistor_value }"
+      mesure = 'ohms'
     end
-    "Resistor value: #{ resistor_value }"
+    "Resistor value: #{ resistor_value } #{ mesure }"
   end
 end
