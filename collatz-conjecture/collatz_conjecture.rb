@@ -1,6 +1,6 @@
 class CollatzConjecture
   def self.steps(number)
-    raise ArgumentError if number <= 0
+    raise ArgumentError unless number.positive?
     steps = 0
     while (number != 1) do
       if number.even?
