@@ -1,13 +1,19 @@
 class Bob
+  IsAskingLoudly = -> (n) { IsAsking[n] && IsYelling[n] }
+  IsAsking = -> (n) { n.end_with?('?') }
+  IsYelling = -> (n) { n.upcase == n && n =~ /[A-Z]/ }
+  IsSilent = -> (n) { n.gsub(/\s/, '').empty? }
+
   def self.hey(remark)
+    remark.strip!
     case remark
-    when -> (n) { n.include?('?') && n.upcase == remark && remark.count("a-zA-Z") > 0 }
+    when IsAskingLoudly
       "Calm down, I know what I'm doing!"
-    when -> (n) { n.gsub(" ", "").end_with?('?') }
+    when IsAsking
       "Sure."
-    when -> (n) { n.upcase == remark && remark.count("a-zA-Z") > 0 }
+    when IsYelling
       "Whoa, chill out!"
-    when -> (n) { n.gsub(" ", "").gsub("\t", "").gsub("\r", "").chomp.empty? }
+    when IsSilent
       "Fine. Be that way!"
     else
       "Whatever."
