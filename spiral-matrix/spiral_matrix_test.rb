@@ -24,7 +24,6 @@ class SpiralMatrixTest < Minitest::Test
   end
 
   def test_spiral_of_size_3
-    skip
     spiral = SpiralMatrix.new(3).matrix
     expected = [
       [1, 2, 3],
@@ -35,7 +34,6 @@ class SpiralMatrixTest < Minitest::Test
   end
 
   def test_spiral_of_size_4
-    skip
     spiral = SpiralMatrix.new(4).matrix
     expected = [
       [1, 2, 3, 4],
@@ -47,7 +45,6 @@ class SpiralMatrixTest < Minitest::Test
   end
 
   def test_spiral_of_size_5
-    skip
     spiral = SpiralMatrix.new(5).matrix
     expected = [
       [1, 2, 3, 4, 5],
