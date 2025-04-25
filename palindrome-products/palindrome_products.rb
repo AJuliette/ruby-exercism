@@ -1,47 +1,53 @@
 class Palindromes
-  def initialize(max_factor:, min_factor:1)
-    @max_factor = max_factor
-    @min_factor = min_factor
+  attr_reader :smallest, :largest
 
-    raise ArgumentError, "min must be <= max" if @min_factor > @max_factor 
+  def initialize(min_factor:1, max_factor:)
+    raise ArgumentError, "min must be <= max" unless min_factor <= max_factor
+
+    @min_factor = min_factor
+    @max_factor = max_factor
   end
 
   def generate
-    @palindromes_and_factors = (@min_factor..@max_factor).each_with_object({}) do |a, hash|
-      (a..@max_factor).each do |b|
-        product = a * b
-        if palindrome?(product)
-          hash[product] ||= []
-          hash[product] << [a, b]
-        end
-      end    
+    lowest_product = @min_factor ** 2
+    highest_product = @max_factor ** 2
+
+    @smallest = find_palindrome(lowest_product.upto(highest_product))
+    @largest = find_palindrome(highest_product.downto(lowest_product))
+  end
+
+  def find_palindrome(enum)
+    palindrome = Palindrome.new(nil, [])
+    enum.each do |candidate|
+      next unless Palindromes.is_palindrome?(candidate)
+
+      factors = factors(candidate)
+
+      unless factors.empty?
+        palindrome = Palindrome.new(candidate, factors)
+        break
+      end
     end
-    self
+    palindrome
   end
 
-  def smallest
-    min = @palindromes_and_factors.keys.min
-    @value_and_factors = { value: min, factors: (@palindromes_and_factors[min] || []) }
-    self
+  def factors(number)
+    (@min_factor..Math.sqrt(number)).each_with_object([]) do |factor, factors|
+      other, mod = number.divmod factor
+      factors << [factor, other] if mod.zero? && other.between?(@min_factor, @max_factor)
+    end
   end
 
-  def largest
-    max = @palindromes_and_factors.keys.max
-    @value_and_factors = { value: max, factors: (@palindromes_and_factors[max] || []) }
-    self
-  end
-
-  def value
-    @value_and_factors[:value]
-  end
-
-  def factors
-    @value_and_factors[:factors]
-  end
-
-  private
-
-  def palindrome?(number)
+  def self.is_palindrome?(number)
     number.to_s == number.to_s.reverse
+  end
+end
+
+class Palindrome
+  attr_reader :value, :factors
+
+  def initialize(value, factors)
+    @value = value
+    @factors = factors
   end
 end
