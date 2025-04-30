@@ -13,15 +13,26 @@ class BottleSong
     0 => "no"
   }
 
-  def self.recite(number_of_bottles, number_of_verses)
-    (0...number_of_verses).map do |i|
-      remaining_bottles = number_of_bottles - i
-      first_line = "#{ NUMBER_TO_NAME[remaining_bottles].capitalize } green #{ remaining_bottles == 1 ? "bottle" : "bottles" } hanging on the wall,\n"
-      second_line = "#{ NUMBER_TO_NAME[remaining_bottles].capitalize } green #{ remaining_bottles == 1 ? "bottle" : "bottles" } hanging on the wall,\n"
-      third_line = "And if one green bottle should accidentally fall,\n"
+  def self.recite(starting_bottles, number_of_verses)
+    number_of_verses.times.map do |i|
+      remaining_bottles = starting_bottles - i
       remaining_bottles_after_fall = remaining_bottles - 1
-      fourth_line = "There'll be #{ NUMBER_TO_NAME[(remaining_bottles_after_fall)] } green #{ remaining_bottles_after_fall == 1 ? "bottle" : "bottles" } hanging on the wall.\n"
-      first_line + second_line + third_line + fourth_line
+      verse(remaining_bottles, remaining_bottles_after_fall)
     end.join("\n")
+  end
+
+  def self.verse(remaining_bottles, remaining_bottles_after_fall)
+    <<~TEXT
+      #{ bottle_phrase(remaining_bottles).capitalize } hanging on the wall,
+      #{ bottle_phrase(remaining_bottles).capitalize } hanging on the wall,
+      And if one green bottle should accidentally fall,
+      There'll be #{bottle_phrase(remaining_bottles_after_fall).downcase} hanging on the wall.
+    TEXT
+  end
+
+  def self.bottle_phrase(count)
+    word = NUMBER_TO_NAME[count]
+    bottle = count == 1 ? "bottle" : "bottles"
+    "#{word} green #{bottle}"
   end
 end
